@@ -15,9 +15,8 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 // fix date issues
-if (function_exists('date_default_timezone_set'))
-{
-    date_default_timezone_set("UTC");
+if (function_exists('date_default_timezone_set')) {
+    date_default_timezone_set('UTC');
 }
 
 /**
@@ -39,5 +38,3 @@ require_once(MPM_PATH . '/lib/init.php');
 $obj = MpmControllerFactory::getInstance($argv);
 $obj->doAction();
 exit;
-
-?>

@@ -16,7 +16,4 @@
  */
 class MpmClassUndefinedException extends Exception
 {
-	
 }
-
-?>

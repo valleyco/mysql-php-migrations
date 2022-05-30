@@ -16,7 +16,6 @@
  */
 class ExceptionalMysqli extends mysqli
 {
-
     /**
      * Object constructor.
      *
@@ -31,33 +30,33 @@ class ExceptionalMysqli extends mysqli
     public function __construct()
     {
         $args = func_get_args();
-        eval("parent::__construct(" . join(',', array_map('MpmStringHelper::addSingleQuotes', $args)) . ");");
-        if ($this->connect_errno)
-        {
+        eval('parent::__construct(' . join(',', array_map('MpmStringHelper::addSingleQuotes', $args)) . ');');
+
+        if ($this->connect_errno) {
             throw new MpmDatabaseConnectionException($this->connect_error);
         }
     }
-    
+
     /**
      * Wrapper for the mysqli::query method.
      *
-     * @throws MpmMalformedQueryException
      *
      * @param string $query      the SQL query to send to MySQL
      * @param int    $resultMode Either the constant MYSQLI_USE_RESULT or MYSQLI_STORE_RESULT depending on the desired behavior
+     * @throws MpmMalformedQueryException
      *
      * @return mysqli_result
      */
     public function query($query, $resultMode = MYSQLI_STORE_RESULT)
     {
         $result = parent::query($query, $resultMode);
-        if ($this->errno)
-        {
+
+        if ($this->errno) {
             throw new MpmMalformedQueryException($this->error);
         }
         return $result;
     }
-    
+
     /**
      * Turns off auto commit.
      *
@@ -74,14 +73,11 @@ class ExceptionalMysqli extends mysqli
      *
      * @uses ExceptionalMysqli::query()
      *
+     * @param mixed $sql
      * @return mysqli_result
      */
     public function exec($sql)
     {
         return $this->query($sql);
     }
-
 }
-
-
-?>
