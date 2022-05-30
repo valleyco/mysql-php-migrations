@@ -26,7 +26,7 @@ class MpmLatestController extends MpmController
      * @uses MpmMigrationHelper::getLatestMigration()
      * @uses MpmUpController::doAction()
      *
-     * @param bool $quiet supresses certain text when true
+     * @param bool $quiet suppresses certain text when true
      *
      * @return void
      */

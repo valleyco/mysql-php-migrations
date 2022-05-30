@@ -1,0 +1,14 @@
+<?php
+
+class Migration_@@timestamp@@ extends MpmMigration
+{
+	public function up(PDO $pdo)
+	{
+		$pdo->exec(file_get_contents(__DIR__ . '/@@timestamp@@_up.sql'));		
+	}
+
+	public function down(PDO $pdo)
+	{
+		$pdo->exec(file_get_contents(__DIR__ . '/@@timestamp@@_down.sql'));		
+	}
+}

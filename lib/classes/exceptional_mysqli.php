@@ -40,6 +40,7 @@ class ExceptionalMysqli extends mysqli
     /**
      * Wrapper for the mysqli::query method.
      *
+
      *
      * @param string $query      the SQL query to send to MySQL
      * @param int    $resultMode Either the constant MYSQLI_USE_RESULT or MYSQLI_STORE_RESULT depending on the desired behavior

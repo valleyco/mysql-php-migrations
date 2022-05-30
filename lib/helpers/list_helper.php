@@ -40,7 +40,7 @@ class MpmListHelper
      * @param int $startIdx the start index number
      * @param int $total    total number of records to return
      *
-     * @return arrays
+     * @return array
      */
     public static function getFullList($startIdx = 0, $total = 30)
     {
@@ -80,8 +80,9 @@ class MpmListHelper
         $file_timestamps = MpmListHelper::getTimestampArray($files);
 
         if (MpmDbHelper::getMethod() == MPM_METHOD_PDO) {
+            $pdo = MpmDbHelper::getPdoObj();
+
             if (count($files) > 0) {
-                $pdo = MpmDbHelper::getPdoObj();
                 $pdo->beginTransaction();
 
                 try {

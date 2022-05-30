@@ -34,12 +34,15 @@ class MpmAddController extends MpmController
     {
         // make sure system is init'ed
         MpmDbHelper::test();
+        $migration_type = $this->arguments[0] ?? '--sql';
 
+        if ( ! in_array($migration_type, ['--php', '--sql'])) {
+            return $this->displayHelp();
+        }
         // get date stamp for use in generating filename
         $date_stamp = date('Y_m_d_H_i_s');
         $filename = $date_stamp . '.php';
         $vars = ['timestamp' => $date_stamp];
-        //$classname = 'Migration_' . $date_stamp;
 
         // get list of files
         $files = MpmListHelper::getFiles();
@@ -53,9 +56,13 @@ class MpmAddController extends MpmController
 
         // create file
         if (MpmDbHelper::getMethod() == MPM_METHOD_PDO) {
-            $file = MpmTemplateHelper::getTemplate('pdo_migration.txt', $vars);
+            $file = $migration_type =='--sql'
+                ? MpmTemplateHelper::getTemplate('pdo_sql_migration.txt', $vars)
+                : MpmTemplateHelper::getTemplate('pdo_migration.txt', $vars);
         } else {
-            $file = MpmTemplateHelper::getTemplate('mysqli_migration.txt', $vars);
+            $file = $migration_type =='--sql'
+                ? MpmTemplateHelper::getTemplate('mysqli_sql_migration.txt', $vars)
+                : MpmTemplateHelper::getTemplate('mysqli_migration.txt', $vars);
         }
 
         // write the file
@@ -75,9 +82,13 @@ class MpmAddController extends MpmController
         }
         fclose($fp);
 
+        if ($migration_type == '--sql') {
+            file_put_contents(MPM_DB_PATH ."${date_stamp}_up.sql", "-- put your up sql statements here\n");
+            file_put_contents(MPM_DB_PATH ."${date_stamp}_down.sql", "-- put your down sql statements here\n");
+        }
         // display success message
         $obj = MpmCommandLineWriter::getInstance();
-        $obj->addText('New migration created: file /db/' . $filename);
+        $obj->addText('New migration created: file '. MPM_DB_PATH . $filename);
         $obj->write();
     }
 
@@ -93,10 +104,12 @@ class MpmAddController extends MpmController
     public function displayHelp()
     {
         $obj = MpmCommandLineWriter::getInstance();
-        $obj->addText('./migrate.php add');
+        $obj->addText('./migrate.php add [--sql|--php]');
         $obj->addText(' ');
-        $obj->addText('This command is used to create a new migration script.  The script will be created and prepopulated with the up() and down() methods which you can then modify for the migration.');
-        $obj->addText(' ');
+        $obj->addText('This command is used to create a new migration script.');
+        $obj->addText('  --php - The script will be created and prepopulated with the up() and down() methods which you can then modify for the migration.');
+        $obj->addText('  --sql - sql files will be generated for the up and down actions which you can then edit.');
+        $obj->addText(' default is sql ');
         $obj->addText('Valid Example:');
         $obj->addText('./migrate.php add', 4);
         $obj->write();

@@ -41,7 +41,7 @@ class MpmMigrationHelper
             $obj->rollback();
             echo "\n\tQuery failed!";
             echo "\n\t--- " . $e->getMessage();
-            exit;
+            exit(1);
         }
         $obj->commit();
     }
@@ -56,14 +56,13 @@ class MpmMigrationHelper
      * @uses MpmCommandLineWriter::writeLine()
      * @uses MPM_DB_PATH
      *
-     * @param object  $obj        		    a simple object with migration information (from a migration list)
-     * @param int    &$total_migrations_run a running total of migrations run
-     * @param bool    $forced               if true, exceptions will not cause the script to exit
-     * @param mixed $method
+     * @param object  $obj   a simple object with migration information (from a migration list)
+     * @param string $method  up/down
+     * @param bool  $forced  if true, exceptions will not cause the script to exit
      *
      * @return void
      */
-    public static function runMigration(&$obj, $method = 'up', $forced = false)
+    public static function runMigration($obj, $method = 'up', $forced = false)
     {
         $db_config = $GLOBALS['db_config'];
         $migrations_table = $db_config->migrations_table;
@@ -107,7 +106,7 @@ class MpmMigrationHelper
 
             if ( ! $forced) {
                 echo "\n\n";
-                exit;
+                exit(1);
             } else {
                 return;
             }
@@ -204,7 +203,7 @@ class MpmMigrationHelper
                     }
                 } catch (Exception $e) {
                     echo "\n\nError: " . $e->getMessage() . "\n\n";
-                    exit;
+                    exit(1);
                 }
                 break;
             case MPM_METHOD_MYSQLI:
@@ -217,7 +216,7 @@ class MpmMigrationHelper
                     }
                 } catch (Exception $e) {
                     echo "\n\nError: " . $e->getMessage() . "\n\n";
-                    exit;
+                    exit(1);
                 }
                 break;
 
@@ -341,7 +340,7 @@ class MpmMigrationHelper
             }
         } catch (Exception $e) {
             echo "\n\nERROR: " . $e->getMessage() . "\n\n";
-            exit;
+            exit(1);
         }
         return $latest;
     }
@@ -380,7 +379,7 @@ class MpmMigrationHelper
             }
         } catch (Exception $e) {
             echo "\n\nERROR: " . $e->getMessage() . "\n\n";
-            exit;
+            exit(1);
         }
         return $count;
     }
@@ -418,7 +417,7 @@ class MpmMigrationHelper
             }
         } catch (Exception $e) {
             echo "\n\nERROR: " . $e->getMessage() . "\n\n";
-            exit;
+            exit(1);
         }
         return $to_id;
     }
@@ -465,7 +464,7 @@ class MpmMigrationHelper
             }
         } catch (Exception $e) {
             echo "\n\nERROR: " . $e->getMessage() . "\n\n";
-            exit;
+            exit(1);
         }
         return $return;
     }
@@ -504,7 +503,7 @@ class MpmMigrationHelper
             }
         } catch (Exception $e) {
             echo "\n\nERROR: " . $e->getMessage() . "\n\n";
-            exit;
+            exit(1);
         }
         return $obj;
     }

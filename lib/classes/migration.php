@@ -23,7 +23,7 @@ abstract class MpmMigration
      *
      * @return void
      */
-    abstract public function up(PDO &$pdo);
+    abstract public function up(PDO $pdo);
 
     /**
      * Migrates down (reverses changes made by the up method).
@@ -32,5 +32,5 @@ abstract class MpmMigration
      *
      * @return void
      */
-    abstract public function down(PDO &$pdo);
+    abstract public function down(PDO $pdo);
 }

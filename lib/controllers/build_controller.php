@@ -139,8 +139,10 @@ class MpmBuildController extends MpmController
      *
      * @return void
      */
-    public function build($with_data)
+    public function build($with_data = false)
     {
+        $forced = false;
+        $quiet = true;
         require_once(MPM_DB_PATH . 'schema.php');
         $obj = new MpmInitialSchema();
         $obj->destroy();

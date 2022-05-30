@@ -1,1 +1,4 @@
+.vscode
 /config/db_config.php
+/.php-cs-fixer.cache
+/vendor

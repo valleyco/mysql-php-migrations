@@ -69,6 +69,7 @@ class MpmDbHelper
     public static function getMysqliObj()
     {
         $db_config = $GLOBALS['db_config'];
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         return new ExceptionalMysqli($db_config->host, $db_config->user, $db_config->pass, $db_config->name, $db_config->port);
     }
 
@@ -101,7 +102,7 @@ class MpmDbHelper
      *
      * @return obj
      */
-    public static function doSingleRowSelect($sql, &$db = null)
+    public static function doSingleRowSelect($sql, $db = null)
     {
         try {
             if ($db == null) {
@@ -279,7 +280,7 @@ class MpmDbHelper
      * @param null|mixed $dbObj
      * @return array
      */
-    public static function getTables(&$dbObj = null)
+    public static function getTables($dbObj = null)
     {
         if ($dbObj == null) {
             $dbObj = MpmDbHelper::getDbObj();

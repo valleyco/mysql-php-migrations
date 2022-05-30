@@ -1,0 +1,27 @@
+{
+    "name": "valleyco/mysql-php-migration",
+    "type": "library",
+    "description": "Command line utility for managing MySQL database migrations",
+    "keywords": ["mysql", "migration"],
+    "homepage": "https://github.com/valleyco/mysql-php-migration",
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "David Levy"
+        },
+        {
+            "name": "Dave Sloan"
+        },
+        {
+            "name": "Dave James Miller",
+            "email": "dave@davejamesmiller.com"
+        },
+        {
+            "name": "Denis Bykov",
+            "email": "denis.bykov@cleancode.ru"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    }
+}

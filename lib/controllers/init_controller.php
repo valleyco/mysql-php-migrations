@@ -134,10 +134,10 @@ class MpmInitController extends MpmController
 
             if (empty($port)) {
                 $port = 3306;
-            }
-
-            if ( ! is_numeric($port)) {
+            } elseif ( ! is_numeric($port)) {
                 $port = '';
+            } else {
+                $port = (int)$port;
             }
         }
 
@@ -219,18 +219,18 @@ class MpmInitController extends MpmController
                 $doBuild = true;
             }
         }
-
-        $file = '<?php' . "\n\n";
-        $file .= '$db_config = (object) array();' . "\n";
-        $file .= '$db_config->host = ' . "'" . $host . "';" . "\n";
-        $file .= '$db_config->port = ' . "'" . $port . "';" . "\n";
-        $file .= '$db_config->user = ' . "'" . $user . "';" . "\n";
-        $file .= '$db_config->pass = ' . "'" . $pass . "';" . "\n";
-        $file .= '$db_config->name = ' . "'" . $dbname . "';" . "\n";
-        $file .= '$db_config->db_path = ' . "'" . $db_path . "';" . "\n";
-        $file .= '$db_config->method = ' . $method . ';' . "\n";
-        $file .= '$db_config->migrations_table = ' . "'" . $migrations_table . "';" . "\n";
-        $file .= "\n?>";
+        $config = [
+            'host' => $host,
+            'port' => $port,
+            'user' => $user,
+            'pass' => $pass,
+            'name' => $dbname,
+            'db_path' => $db_path,
+            'method' => $method,
+            'migrations_table' => $migrations_table,
+        ];
+        $file = "<?php\n\n";
+        $file .= '$db_config = (object) '. var_export($config, true) . ";\n";
 
         if (file_exists(MPM_PATH . '/config/db_config.php')) {
             unlink(MPM_PATH . '/config/db_config.php');
@@ -309,7 +309,7 @@ class MpmInitController extends MpmController
             echo "\n\n";
         }
 
-        echo "Initalization complete!  Type 'php migrate.php help' for a list of commands.\n\n";
+        echo "Initialization complete!  Type 'php migrate.php help' for a list of commands.\n\n";
         $clw->writeFooter();
         exit;
     }

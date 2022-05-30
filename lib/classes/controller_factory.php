@@ -9,7 +9,7 @@
  */
 
 /**
- * The MpmControllerFactory reads the command line arguments, determines which controller is needed, and returns that controlller object.
+ * The MpmControllerFactory reads the command line arguments, determines which controller is needed, and returns that controller object.
  *
  * @package    mysql_php_migrations
  * @subpackage Classes

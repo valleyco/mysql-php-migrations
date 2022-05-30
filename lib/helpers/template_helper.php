@@ -19,7 +19,7 @@ class MpmTemplateHelper
     /**
      * Returns the requested template file as an array, each item in that array is a single line from the file.
      *
-     * @uses MpmTemplateHelpger::getTemplate()
+     * @uses MpmTemplateHelper::getTemplate()
      *
      * @param string $file the filename of the template being requested
      * @param array	 $vars an array of key value pairs that correspond to variables that should be replaced in the template file
